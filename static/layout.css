@@ -1,0 +1,52 @@
+html,
+th,
+td {
+    font-size: large;
+	font-family: sans;
+}
+
+h3.hinweis {
+	text-align: center;
+	font-style: italic;
+	color: red;
+}
+
+table.kopf th {
+	width: 300px;
+}
+
+table.plan,
+table.plan tr th,
+table.plan tr td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+th.kurs {
+    width: 100px;
+}
+
+th.stunde {
+    width: 33px;
+}
+
+th.fach {
+    width: 50px;
+}
+
+th.lehrer {
+    width: 150px;
+}
+
+th.raum {
+    width: 66px;
+}
+
+th.info {
+    width: 369px;
+}
+
+td.geaendert {
+	color: red;
+}
+
