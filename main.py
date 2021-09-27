@@ -176,7 +176,7 @@ def main():
 	
 	# load config
 	with open('config.txt', 'r') as h:
-		rooturl, user, passwd = h.read().split('\n')
+		rooturl, user, passwd = h.read().split('\n')[:3]
 	
 	v = Vertretungsplan(rooturl, user, passwd)
 	d = Diashow(rooturl, user, passwd)
