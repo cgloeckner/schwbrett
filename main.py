@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-import requests, xml, threading, tempfile, datetime
+import requests, xml, threading, tempfile, datetime, logging, traceback
 from requests.auth import HTTPBasicAuth
 
 import xml.etree.ElementTree as ET
@@ -90,7 +90,7 @@ class WebLoader(object):
 				error = self.error
 			if self.error is not None:
 				raise self.error
-			
+		
 		elem = self.data[self.index]
 		
 		if not elem.next():
@@ -140,9 +140,10 @@ Reloads XML files after each one was displayed."""
 		y = int(date[0:4])
 		m = int(date[4:6])
 		d = int(date[6:8])
-		last_date = datetime.datetime(year=y, month=m-1, day=d+1)
-		# d+1: today() contains hour etc.
-		return last_date >= datetime.datetime.today()
+		last_date = datetime.datetime(year=y, month=m, day=d)
+		
+		today = datetime.datetime.today().replace(hour=0, minute=0, second=0, microsecond=0)
+		return last_date >= today
 
 
 class Diashow(WebLoader):
@@ -171,8 +172,18 @@ class Diashow(WebLoader):
 	
 # -----------------------------------------------------------------------------
 
+def logException(error):
+	""" Write full traceback to log. """
+	with tempfile.TemporaryFile(mode='w+') as h:
+		traceback.print_exc(file=h)
+		h.seek(0) # rewind after writing
+		
+		logging.error('Exception caught:\n{0}'.format(h.read()))
+	
+
 def main():
-	last_error = None
+	logging.basicConfig(filename='./error.log', format='%(asctime)s %(message)s', level=logging.INFO)
+	logging.info('=== STARTED ===')
 	
 	# load config
 	with open('config.txt', 'r') as h:
@@ -187,8 +198,6 @@ def main():
 	
 	@get('/error')
 	def error():
-		global last_error
-		print(last_error)
 		return '<h1>Verbindung unterbrochen</h1>'
 	
 	@get('/')
@@ -207,8 +216,7 @@ def main():
 		try:
 			node = v.next()
 		except Exception as error:
-			global last_error
-			last_error = error
+			logException(error)
 			redirect('/error')
 		return dict(node=node, page_size=v.page_size)
 	
@@ -222,8 +230,7 @@ def main():
 		try:
 			node = d.next()
 		except Exception as error:
-			global last_error
-			last_error = error
+			logException(error)
 			redirect('/error')
 		return static_file(node.fname, d.cache.name)
 	
