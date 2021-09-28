@@ -140,7 +140,7 @@ Reloads XML files after each one was displayed."""
 		y = int(date[0:4])
 		m = int(date[4:6])
 		d = int(date[6:8])
-		last_date = datetime.datetime(year=y, month=m, day=d+1)
+		last_date = datetime.datetime(year=y, month=m-1, day=d+1)
 		# d+1: today() contains hour etc.
 		return last_date >= datetime.datetime.today()
 
