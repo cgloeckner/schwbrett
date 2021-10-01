@@ -72,7 +72,8 @@ class WebLoader(object):
 			self.new_data = e
 		
 		with self.lock:
-			self.data = self.new_data
+			self.data  = self.new_data
+			self.index = 0
 		
 	def fetch(self, res):
 		"""Needs to be overwritten for custom loading."""
