@@ -122,7 +122,7 @@ Reloads XML files after each one was displayed."""
 	
 	def refetch(self, node):
 		res = requests.get('{0}/{1}'.format(self.base, node.fname), auth=self.auth)
-		node.data = ET.fromstring(res.text)
+		node.data = ET.fromstring(res.content.decode('utf-8'))
 		
 		# count how many pages are necessary
 		num_entries     = len(node.data.find('haupt'))
