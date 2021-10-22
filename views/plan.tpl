@@ -15,6 +15,7 @@
 %checkAenderung = lambda n, k: ' class="geaendert"' if n is not None and n.text is not None and k in n.attrib else ''
 
 <h2>Vertretungsplan für {{node.data.find('kopf/titel').text}}</h2>
+<!--
 <p>{{node.data.find('kopf/datum').text}} Uhr, {{node.data.find('kopf/schulname').text}}</p>
 <table class="kopf">
     <tr>
@@ -34,6 +35,7 @@
         <td>{{handleNone(node.data.find('kopf/kopfinfo/aenderungk'))}}</td>
     </tr>
 </table>
+//-->
 
 <h3>Geänderte Unterrichtsstunden: 
 %if node.num_pages > 1:
@@ -78,6 +80,7 @@
     %end
 %end
 
+<!--
 %if len(zeilen) > 0:
 <h3>Geänderte Aufsichten:</h3>
 <ul>
@@ -86,6 +89,7 @@
     %end
 </ul>
 %end
+//-->
 
 %fuss = node.data.find('fuss')
 %zeilen = list()
