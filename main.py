@@ -117,7 +117,7 @@ class Vertretungsplan(WebLoader):
 Reloads XML files after each one was displayed."""
 	def __init__(self, rooturl, user, passwd):
 		super().__init__(rooturl, user, passwd, 'substituteplans')
-		self.page_size = 10 # FIXME
+		self.page_size = 17 # FIXME
 		self.start()
 	
 	def refetch(self, node):
@@ -240,4 +240,3 @@ def main():
 
 if __name__ == '__main__':
 	main()
-
