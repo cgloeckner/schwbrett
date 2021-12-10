@@ -68,8 +68,9 @@ class WebLoader(object):
 			for line in res.text.split('\n'):
 				if line.startswith('"'):
 					self.fetch(Resource(line))
-		except requests.exceptions.ConnectionError as e:
-			self.new_data = e
+		except requests.exceptions.ConnectionError as error:
+			with self.lock:
+				self.error = error
 		
 		with self.lock:
 			self.data  = self.new_data
