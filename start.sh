@@ -2,4 +2,6 @@
 
 ./main.py &
 sleep 3s
-firefox --kiosk --new-window http://localhost:8080
+firefox --new-window http://localhost:8080
+sleep 3s
+xdotool search --sync --onlyvisible -class "firefox-esr" key F11
