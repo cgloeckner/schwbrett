@@ -2,21 +2,32 @@
 <html>
 <head>
     <title>Unbenanntes Dokument</title>
+	<script src="/static/jquery-3.6.0.min.js"></script>
     <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 </head>
 
-<body>
-    <iframe id="current" width="100%" height=100% scrolling="no" align="top" border="0" frameborder="0" src=""> Ihr Browser unterstützt Inlineframes nicht oder zeigt sie in der derzeitigen Konfiguration nicht an. </iframe>
+<body onload="showNext()">
+    <iframe id="plan" width="100%" height=100% scrolling="no" align="top" border="0" frameborder="0" src=""> Ihr Browser unterstützt Inlineframes nicht oder zeigt sie in der derzeitigen Konfiguration nicht an. </iframe>
 
 <script language="JavaScript" type="text/JavaScript">
-var delay = 5000;
 
 function showNext() {
-    document.getElementById('current').src = '/vertretung/next/' + Date.now()
-    setTimeout("showNext()", delay);
-}
+    var container = document.getElementById('plan')
+    container.src = '/vertretung/next/' + Date.now()
+    container.onload = function(event) {
+        var body = container.contentDocument.body.innerHTML
 
-showNext();
+        // count lines in loaded plan
+        var lines = body.match(new RegExp('<tr>', 'gi')).length
+        // calculate duration based on lines
+        var delay = lines * 500
+        if (lines < 4) {
+            delay = 2500
+        }
+        
+        setTimeout("showNext()", delay)
+    }
+}
 </script>
 
 </body>
