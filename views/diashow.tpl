@@ -2,19 +2,19 @@
 <html>
 <head>
     <title>Unbenanntes Dokument</title>
-	<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+	<script src="/static/jquery-3.6.0.min.js"></script>
     <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 </head>
 
 <body>
-    <img id="current" src="" width=auto height=100%  alt=""><br>
+    <img id="dia" src="" width=auto height=100%  alt=""><br>
 
 <script language="JavaScript" type="text/JavaScript">
-var delay = 5000;
 
 function showNext() {
-    document.getElementById('current').src = '/diashow/next/' + Date.now()
-    setTimeout("showNext()", delay);
+    var dia = document.getElementById('dia')
+    dia.src = '/diashow/next/' + Date.now()
+    setTimeout("showNext()", 5000)
 }
 
 showNext();
